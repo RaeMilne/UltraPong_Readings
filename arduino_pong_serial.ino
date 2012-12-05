@@ -3,26 +3,38 @@ Pong Controllers
  Rae Milne
  Physical Computing
  2 December 2012
+ 
+ Modified Code from:
+ Bruce Allen
+ Date: 23/07/09
+ 
  */
 
-int fsrUpPin = A0;
-int fsrDownPin = A1;
+
+int leftPin = 3;
+//int rightPin = A1;
 int btnPin = 7;
-int upVal;
-int downVal;
+
+//int leftVal;
+//int rightVal;
 int btnVal;
 
 int previousTime;
 int currentTime;
 int delayTime = 0;
 
+const int numVals = 3;
+
+long tempVals[numVals];
+
+long leftVal, pulse, inches;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(fsrUpPin, INPUT);
-  pinMode(fsrDownPin, INPUT);
+  pinMode(leftPin, INPUT);
+  //pinMode(rightPin, INPUT);
   pinMode(btnPin, INPUT_PULLUP);
-  
+
   previousTime = millis();
 }
 
@@ -30,30 +42,57 @@ void loop() {
 
   currentTime = millis();
 
-  upVal = analogRead(fsrUpPin);
-  //Serial.write(upVal);
-
-  downVal = analogRead(fsrDownPin);
-  //Serial.write(downVal);
-  
-  btnVal = digitalRead(btnPin);
-
   if (currentTime - previousTime >= delayTime) 
   {  
-   // Serial.print("fsrUpPin: ");
-    Serial.print(upVal);
-    Serial.print(",");
 
-   // Serial.print("fsrDownPin: ");
-    Serial.print(downVal);
+    
+    pulse = pulseIn(leftPin, HIGH);
+    
+    leftVal = smoothVals(pulse);
+    
+    //inches = pulse/147;
+    //leftVal = inches;
+
+
+    btnVal = digitalRead(btnPin);
+
+    Serial.print(leftVal);
+
+    //  Serial.print(",");
+    //  Serial.print(rightVal);
+
     Serial.print(",");
     Serial.println(btnVal);
 
     previousTime = millis(); 
+
   }
 
-
 }
+
+long smoothVals(long _pulse) {
+  for (int i = 0; i < numVals; i++) {
+   tempVals[i] = _pulse/147; //value in inches
+  }
+ 
+ for (int i = 0; i < numVals; i++) {
+   inches = 0;
+   inches += tempVals[i];
+   inches /= numVals;
+ }
+ 
+ return inches;
+ 
+}
+
+   
+
+
+
+
+
+
+
 
 
 
