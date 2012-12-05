@@ -48,11 +48,8 @@ void loop() {
     
     pulse = pulseIn(leftPin, HIGH);
     
-    leftVal = smoothVals(pulse);
-    
-    //inches = pulse/147;
-    //leftVal = inches;
-
+    inches = pulse/147;
+    leftVal = inches;
 
     btnVal = digitalRead(btnPin);
 
@@ -69,32 +66,3 @@ void loop() {
   }
 
 }
-
-long smoothVals(long _pulse) {
-  for (int i = 0; i < numVals; i++) {
-   tempVals[i] = _pulse/147; //value in inches
-  }
- 
- for (int i = 0; i < numVals; i++) {
-   inches = 0;
-   inches += tempVals[i];
-   inches /= numVals;
- }
- 
- return inches;
- 
-}
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
