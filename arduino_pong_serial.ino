@@ -37,6 +37,7 @@ void loop() {
     Serial.print(rightVal);
     Serial.print(",");
     Serial.println(btnVal);
+   // delay(100);
 
 }
 
