@@ -3,15 +3,12 @@ Pong Controllers
  Rae Milne
  Physical Computing
  2 December 2012
-
  
  */
 
 int inByte = 0;
-
-//int leftPin = 3;
-int rightPin = A1;
-int btnPin = 13;
+int rightPin = A1; //rangerfinder
+int btnPin = 13; //button
 int rightVal = 0;
 int btnVal = 1;
 
@@ -23,21 +20,14 @@ void setup() {
 }
 
 void loop() {
-  
-  /*
-    inByte = Serial.read();
-    Serial.print("I received: ");
-    Serial.println(inByte, DEC);
-    
-    */
 
     rightVal = analogRead(rightPin);
     btnVal = digitalRead(btnPin);
-
+    
+    //Send values to serial
     Serial.print(rightVal);
     Serial.print(",");
     Serial.println(btnVal);
-   // delay(100);
 
 }
 
